@@ -14,11 +14,8 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { registerUser } from "../../api/authApi";
 
-const API_URL =
-  Platform.OS === "android"
-    ? "http://10.0.2.2:4000"
-    : "http://localhost:4000";
 
 const Register = ({ navigation }) => {
   const { width, height } = useWindowDimensions();
@@ -34,90 +31,76 @@ const Register = ({ navigation }) => {
   const isSmallScreen = height < 700;
 
   const handleSignup = async () => {
-    const trimmedEmail = email.trim();
+  const trimmedEmail = email.trim();
 
-    if (!trimmedEmail) {
-      Alert.alert("Required", "Please enter your email address.");
-      return;
-    }
+  if (!trimmedEmail) {
+    Alert.alert("Required", "Please enter your email address.");
+    return;
+  }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
-      Alert.alert("Invalid Email", "Please enter a valid email address.");
-      return;
-    }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+    Alert.alert("Invalid Email", "Please enter a valid email address.");
+    return;
+  }
 
-    if (!password) {
-      Alert.alert("Required", "Please enter your password.");
-      return;
-    }
+  if (!password) {
+    Alert.alert("Required", "Please enter your password.");
+    return;
+  }
 
-    if (password.length < 6) {
-      Alert.alert(
-        "Invalid Password",
-        "Password must contain at least 6 characters."
-      );
-      return;
-    }
+ if (password.length < 8) {
+  Alert.alert(
+    "Invalid Password",
+    "Password must be at least 8 characters."
+  );
+  return;
+}
 
-    if (!confirmPassword) {
-      Alert.alert("Required", "Please confirm your password.");
-      return;
-    }
+  if (!confirmPassword) {
+    Alert.alert("Required", "Please confirm your password.");
+    return;
+  }
 
-    if (password !== confirmPassword) {
-      Alert.alert("Password Mismatch", "Passwords do not match.");
-      return;
-    }
+ if (password !== confirmPassword) {
+  Alert.alert(
+    "Password Mismatch",
+    "Password and confirm password must match."
+  );
+  return;
+}
 
-    try {
-      setLoading(true);
+  try {
+    setLoading(true);
 
-      const response = await fetch(
-        `${API_URL}/api/v1/auth/register`,
+    const data = await registerUser({
+      email: trimmedEmail,
+      password,
+      confirmPassword,
+    });
+
+    Alert.alert(
+      "Registration Successful",
+      data?.message || "Your account has been created successfully.",
+      [
         {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+          text: "OK",
+          onPress: () => {
+            navigation?.navigate("Login");
           },
-          body: JSON.stringify({
-            email: trimmedEmail,
-            password,
-            confirmPassword,
-          }),
-        }
-      );
+        },
+      ]
+    );
+  } catch (error) {
+    console.log("REGISTER ERROR:", error);
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          data?.message || data?.error || "Registration failed."
-        );
-      }
-
-      Alert.alert(
-        "Registration Successful",
-        data?.message || "Your account has been created successfully.",
-        [
-          {
-            text: "OK",
-            onPress: () => {
-              navigation?.navigate("Login");
-            },
-          },
-        ]
-      );
-    } catch (error) {
-      console.log("REGISTER ERROR:", error);
-
-      Alert.alert(
-        "Registration Failed",
-        error.message || "Something went wrong. Please try again."
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
+    Alert.alert(
+      "Registration Failed",
+      error.message || "Something went wrong. Please try again."
+    );
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <SafeAreaView style={styles.safeArea}>
