@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import {
   Alert,
   Image,
@@ -12,10 +13,11 @@ import {
   useWindowDimensions,
   View,
 } from "react-native";
+
 import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { registerUser } from "../../api/authApi";
 
+import { registerUser } from "../../api/authApi";
 
 const Register = ({ navigation }) => {
   const { width, height } = useWindowDimensions();
@@ -26,87 +28,106 @@ const Register = ({ navigation }) => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const [loading, setLoading] = useState(false);
 
   const isSmallScreen = height < 700;
 
+  // =====================================================
+  // SIGN UP
+  // =====================================================
+
   const handleSignup = async () => {
-  const trimmedEmail = email.trim();
+    const trimmedEmail = email.trim();
 
-  if (!trimmedEmail) {
-    Alert.alert("Required", "Please enter your email address.");
-    return;
-  }
+    if (!trimmedEmail) {
+      Alert.alert(
+        "Required",
+        "Please enter your email address."
+      );
+      return;
+    }
 
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
-    Alert.alert("Invalid Email", "Please enter a valid email address.");
-    return;
-  }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      Alert.alert(
+        "Invalid Email",
+        "Please enter a valid email address."
+      );
+      return;
+    }
 
-  if (!password) {
-    Alert.alert("Required", "Please enter your password.");
-    return;
-  }
+    if (!password) {
+      Alert.alert(
+        "Required",
+        "Please enter your password."
+      );
+      return;
+    }
 
- if (password.length < 8) {
-  Alert.alert(
-    "Invalid Password",
-    "Password must be at least 8 characters."
-  );
-  return;
-}
+    if (password.length < 8) {
+      Alert.alert(
+        "Invalid Password",
+        "Password must be at least 8 characters."
+      );
+      return;
+    }
 
-  if (!confirmPassword) {
-    Alert.alert("Required", "Please confirm your password.");
-    return;
-  }
+    if (!confirmPassword) {
+      Alert.alert(
+        "Required",
+        "Please confirm your password."
+      );
+      return;
+    }
 
- if (password !== confirmPassword) {
-  Alert.alert(
-    "Password Mismatch",
-    "Password and confirm password must match."
-  );
-  return;
-}
+    if (password !== confirmPassword) {
+      Alert.alert(
+        "Password Mismatch",
+        "Password and confirm password must match."
+      );
+      return;
+    }
 
-  try {
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    const data = await registerUser({
-      email: trimmedEmail,
-      password,
-      confirmPassword,
-    });
+      const data = await registerUser({
+        email: trimmedEmail,
+        password,
+        confirmPassword,
+      });
 
-    Alert.alert(
-      "Registration Successful",
-      data?.message || "Your account has been created successfully.",
-      [
-        {
-          text: "OK",
-          onPress: () => {
-            navigation?.navigate("Login");
-          },
-        },
-      ]
-    );
-  } catch (error) {
-    console.log("REGISTER ERROR:", error);
+      console.log("REGISTRATION SUCCESS:", data);
 
-    Alert.alert(
-      "Registration Failed",
-      error.message || "Something went wrong. Please try again."
-    );
-  } finally {
-    setLoading(false);
-  }
-};
+      // Go to OTP screen
+      navigation.navigate("otpVerification", {
+        email: trimmedEmail,
+      });
+    } catch (error) {
+      console.log("REGISTRATION ERROR:", error);
+
+      Alert.alert(
+        "Registration Failed",
+        error?.message || "Something went wrong."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // =====================================================
+  // UI
+  // =====================================================
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <KeyboardAvoidingView
         style={styles.keyboardView}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        behavior={
+          Platform.OS === "ios"
+            ? "padding"
+            : undefined
+        }
       >
         <ScrollView
           contentContainerStyle={[
@@ -135,7 +156,8 @@ const Register = ({ navigation }) => {
                 styles.logo,
                 {
                   width: Math.min(width * 0.42, 155),
-                  height: Math.min(width * 0.42, 155) * 0.62,
+                  height:
+                    Math.min(width * 0.42, 155) * 0.62,
                 },
               ]}
               resizeMode="contain"
@@ -144,7 +166,9 @@ const Register = ({ navigation }) => {
 
           {/* ================= TITLE ================= */}
 
-          <Text style={styles.title}>Create your account</Text>
+          <Text style={styles.title}>
+            Create your account
+          </Text>
 
           {/* ================= FORM ================= */}
 
@@ -156,7 +180,7 @@ const Register = ({ navigation }) => {
               },
             ]}
           >
-            {/* EMAIL */}
+            {/* ================= EMAIL ================= */}
 
             <View style={styles.inputContainer}>
               <Ionicons
@@ -180,7 +204,7 @@ const Register = ({ navigation }) => {
               />
             </View>
 
-            {/* PASSWORD */}
+            {/* ================= PASSWORD ================= */}
 
             <View style={styles.inputContainer}>
               <Ionicons
@@ -205,7 +229,9 @@ const Register = ({ navigation }) => {
 
               <Pressable
                 style={styles.eyeButton}
-                onPress={() => setShowPassword(!showPassword)}
+                onPress={() =>
+                  setShowPassword(!showPassword)
+                }
               >
                 <Ionicons
                   name={
@@ -219,7 +245,7 @@ const Register = ({ navigation }) => {
               </Pressable>
             </View>
 
-            {/* CONFIRM PASSWORD */}
+            {/* ================= CONFIRM PASSWORD ================= */}
 
             <View style={styles.inputContainer}>
               <Ionicons
@@ -246,7 +272,9 @@ const Register = ({ navigation }) => {
               <Pressable
                 style={styles.eyeButton}
                 onPress={() =>
-                  setShowConfirmPassword(!showConfirmPassword)
+                  setShowConfirmPassword(
+                    !showConfirmPassword
+                  )
                 }
               >
                 <Ionicons
@@ -273,7 +301,9 @@ const Register = ({ navigation }) => {
               disabled={loading}
             >
               <Text style={styles.signupText}>
-                {loading ? "Creating Account..." : "Sign Up"}
+                {loading
+                  ? "Creating Account..."
+                  : "Sign Up"}
               </Text>
             </Pressable>
           </View>
@@ -283,7 +313,9 @@ const Register = ({ navigation }) => {
           <View style={styles.dividerContainer}>
             <View style={styles.divider} />
 
-            <Text style={styles.dividerText}>or continue with</Text>
+            <Text style={styles.dividerText}>
+              or continue with
+            </Text>
 
             <View style={styles.divider} />
           </View>
@@ -293,10 +325,14 @@ const Register = ({ navigation }) => {
           <View style={styles.socialContainer}>
             <Pressable style={styles.socialItem}>
               <View style={styles.socialCircle}>
-                <Text style={styles.googleIcon}>G</Text>
+                <Text style={styles.googleIcon}>
+                  G
+                </Text>
               </View>
 
-              <Text style={styles.socialText}>Google</Text>
+              <Text style={styles.socialText}>
+                Google
+              </Text>
             </Pressable>
 
             <Pressable style={styles.socialItem}>
@@ -308,7 +344,9 @@ const Register = ({ navigation }) => {
                 />
               </View>
 
-              <Text style={styles.socialText}>Phone</Text>
+              <Text style={styles.socialText}>
+                Phone
+              </Text>
             </Pressable>
 
             <Pressable style={styles.socialItem}>
@@ -320,7 +358,9 @@ const Register = ({ navigation }) => {
                 />
               </View>
 
-              <Text style={styles.socialText}>Apple</Text>
+              <Text style={styles.socialText}>
+                Apple
+              </Text>
             </Pressable>
           </View>
 
@@ -332,10 +372,14 @@ const Register = ({ navigation }) => {
             </Text>
 
             <Pressable
-              onPress={() => navigation?.navigate("Login")}
+              onPress={() =>
+                navigation?.navigate("Login")
+              }
               hitSlop={10}
             >
-              <Text style={styles.loginText}>Log in</Text>
+              <Text style={styles.loginText}>
+                Log in
+              </Text>
             </Pressable>
           </View>
         </ScrollView>
@@ -344,7 +388,15 @@ const Register = ({ navigation }) => {
   );
 };
 
+// =====================================================
+// EXPORT
+// =====================================================
+
 export default Register;
+
+// =====================================================
+// STYLES
+// =====================================================
 
 const styles = StyleSheet.create({
   safeArea: {
@@ -362,7 +414,7 @@ const styles = StyleSheet.create({
     paddingBottom: 25,
   },
 
-  /* ================= LOGO ================= */
+  // ================= LOGO =================
 
   logoContainer: {
     alignItems: "center",
@@ -373,7 +425,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
 
-  /* ================= TITLE ================= */
+  // ================= TITLE =================
 
   title: {
     marginTop: 8,
@@ -383,7 +435,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 
-  /* ================= FORM ================= */
+  // ================= FORM =================
 
   formContainer: {
     width: "100%",
@@ -423,7 +475,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  /* ================= SIGN UP ================= */
+  // ================= SIGN UP =================
 
   signupButton: {
     width: "100%",
@@ -449,7 +501,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 
-  /* ================= DIVIDER ================= */
+  // ================= DIVIDER =================
 
   dividerContainer: {
     width: "100%",
@@ -473,7 +525,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
 
-  /* ================= SOCIAL ================= */
+  // ================= SOCIAL =================
 
   socialContainer: {
     width: "100%",
@@ -513,7 +565,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
 
-  /* ================= LOGIN ================= */
+  // ================= LOGIN =================
 
   loginContainer: {
     flexDirection: "row",
