@@ -98,67 +98,6 @@ const Login = ({ navigation }) => {
     }
   };
 
-  // =====================================================
-  // GOOGLE LOGIN
-  // =====================================================
-
-  const handleGoogleLogin = async () => {
-    if (loading) return;
-
-    try {
-      setLoading(true);
-
-      console.log("GOOGLE LOGIN CLICKED");
-
-      // Google authentication will be connected here.
-
-      Alert.alert(
-        "Google Sign-In",
-        "Google Sign-In will be connected here."
-      );
-    } catch (error) {
-      console.log("GOOGLE LOGIN ERROR:", error);
-
-      Alert.alert(
-        "Google Sign-In Failed",
-        error?.message ||
-          "Unable to sign in with Google."
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // =====================================================
-  // APPLE LOGIN
-  // =====================================================
-
-  const handleAppleLogin = async () => {
-    if (loading) return;
-
-    try {
-      setLoading(true);
-
-      console.log("APPLE LOGIN CLICKED");
-
-      // Apple authentication will be connected here.
-
-      Alert.alert(
-        "Apple Sign-In",
-        "Apple Sign-In will be connected here."
-      );
-    } catch (error) {
-      console.log("APPLE LOGIN ERROR:", error);
-
-      Alert.alert(
-        "Apple Sign-In Failed",
-        error?.message ||
-          "Unable to sign in with Apple."
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
 
   // =====================================================
   // UI
@@ -350,8 +289,6 @@ const Login = ({ navigation }) => {
                 styles.socialItem,
                 loading && styles.socialDisabled,
               ]}
-              onPress={handleGoogleLogin}
-              disabled={loading}
             >
               <View style={styles.socialCircle}>
                 <Text style={styles.googleIcon}>
@@ -371,8 +308,6 @@ const Login = ({ navigation }) => {
                 styles.socialItem,
                 loading && styles.socialDisabled,
               ]}
-              onPress={handleAppleLogin}
-              disabled={loading}
             >
               <View style={styles.socialCircle}>
                 <Ionicons
