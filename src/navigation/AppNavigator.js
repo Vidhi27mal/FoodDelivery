@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Register from "../screens/auth/register";
 import OtpVerification from "../screens/auth/otpVerification";
-
+import Login from "../screens/auth/login"
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +24,10 @@ const AppNavigator = () => {
         <Stack.Screen
           name="otpVerification"
           component={OtpVerification}
+        />
+        <Stack.Screen
+          name="Login"
+          component={Login}
         />
 
        
