@@ -8,6 +8,7 @@ import Login from '../screens/auth/login';
 import ForgotPassword from '../screens/auth/ForgotPassword';
 import ResetPasswordOtp from '../screens/auth/ResetPasswordOtp';
 import ResetPassword from '../screens/auth/ResetPassword';
+import splash from "../screens/SplashScreen"
 
 const Stack = createNativeStackNavigator();
 
@@ -15,7 +16,7 @@ const AppNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="register"
+        initialRouteName="splash"
         screenOptions={{
           headerShown: false,
         }}
@@ -29,7 +30,6 @@ const AppNavigator = () => {
           component={ForgotPassword}
           options={{ headerShown: false }}
         />
-
         <Stack.Screen
           name="ResetPasswordOtp"
           component={ResetPasswordOtp}
