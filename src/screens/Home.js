@@ -9,6 +9,9 @@ import {
   StatusBar,
 } from 'react-native';
 
+const PRIMARY_RED = '#DC3026';
+const LIGHT_RED = '#FFF0EF';
+
 const Home = ({ navigation }) => {
   const foodCategories = [
     { emoji: '🍕', name: 'Pizza' },
@@ -66,7 +69,9 @@ const Home = ({ navigation }) => {
 
           <View style={styles.locationContainer}>
             <Text style={styles.locationLabel}>DELIVER TO</Text>
-            <Text style={styles.locationText}>📍 Your Location⌄</Text>
+            <Text style={styles.locationText}>
+              📍 Your Location⌄
+            </Text>
           </View>
 
           <TouchableOpacity style={styles.profileButton}>
@@ -187,6 +192,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
 
+  // Header
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -199,7 +205,7 @@ const styles = StyleSheet.create({
     width: 45,
     height: 45,
     borderRadius: 14,
-    backgroundColor: '#F3F5F3',
+    backgroundColor: '#F3F3F3',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -232,7 +238,7 @@ const styles = StyleSheet.create({
     width: 43,
     height: 43,
     borderRadius: 22,
-    backgroundColor: '#E7F8EC',
+    backgroundColor: LIGHT_RED,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -241,6 +247,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
   },
 
+  // Welcome
   welcomeSection: {
     paddingHorizontal: 20,
     marginTop: 18,
@@ -258,6 +265,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
 
+  // Search
   searchBox: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -280,8 +288,9 @@ const styles = StyleSheet.create({
     color: '#222222',
   },
 
+  // Offer Banner
   offerBanner: {
-    backgroundColor: '#00BF63',
+    backgroundColor: PRIMARY_RED,
     marginHorizontal: 20,
     marginTop: 25,
     borderRadius: 20,
@@ -298,7 +307,7 @@ const styles = StyleSheet.create({
   },
 
   offerTag: {
-    color: '#E8FFF0',
+    color: '#FFE8E6',
     fontSize: 10,
     fontWeight: '800',
     letterSpacing: 1.5,
@@ -323,6 +332,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
 
+  // Section Headers
   sectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -341,9 +351,10 @@ const styles = StyleSheet.create({
   seeAll: {
     fontSize: 13,
     fontWeight: '700',
-    color: '#00A854',
+    color: PRIMARY_RED,
   },
 
+  // Categories
   categoryContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -359,7 +370,7 @@ const styles = StyleSheet.create({
     width: 65,
     height: 65,
     borderRadius: 20,
-    backgroundColor: '#F0F8F2',
+    backgroundColor: LIGHT_RED,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -375,6 +386,7 @@ const styles = StyleSheet.create({
     marginTop: 9,
   },
 
+  // Popular Food Cards
   foodCard: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -391,7 +403,7 @@ const styles = StyleSheet.create({
     width: 85,
     height: 85,
     borderRadius: 14,
-    backgroundColor: '#F5F7F5',
+    backgroundColor: '#F5F5F5',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -427,7 +439,7 @@ const styles = StyleSheet.create({
   foodPrice: {
     fontSize: 16,
     fontWeight: '800',
-    color: '#00A854',
+    color: PRIMARY_RED,
   },
 
   foodRating: {
@@ -439,7 +451,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 10,
-    backgroundColor: '#00BF63',
+    backgroundColor: PRIMARY_RED,
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: 5,
