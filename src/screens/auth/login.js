@@ -82,8 +82,10 @@ const Login = ({ navigation }) => {
 
       console.log("LOGIN SUCCESS:", data);
 
-      // Navigate after successful login
-      navigation.replace("Home");
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "MainDrawer" }],
+        });
 
     } catch (error) {
       console.log("LOGIN ERROR:", error);
