@@ -8,7 +8,7 @@ const SplashScreen = ({ navigation }) => {
       <StatusBar hidden />
 
       <Video
-        source={require("../assets/Foodv.mp4")}
+        source={require("../assets/Foodd.mp4")}
         style={styles.video}
         resizeMode="cover"
         repeat={false}
