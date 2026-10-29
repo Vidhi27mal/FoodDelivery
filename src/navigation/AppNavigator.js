@@ -9,7 +9,7 @@ import Login from '../screens/auth/login';
 import ForgotPassword from '../screens/auth/ForgotPassword';
 import ResetPasswordOtp from '../screens/auth/ResetPasswordOtp';
 import ResetPassword from '../screens/auth/ResetPassword';
-
+import LocationSetupScreen from '../screens/LocationSetupScreen';
 import DrawerNavigator from './DrawerNavigator';
 
 const Stack = createNativeStackNavigator();
@@ -23,45 +23,27 @@ const AppNavigator = () => {
           headerShown: false,
         }}
       >
-        <Stack.Screen
-          name="splash"
-          component={SplashScreen}
-        />
+        <Stack.Screen name="splash" component={SplashScreen} />
+
+        <Stack.Screen name="register" component={Register} />
+
+        <Stack.Screen name="otpVerification" component={OtpVerification} />
+
+        <Stack.Screen name="Login" component={Login} />
+
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+
+        <Stack.Screen name="ResetPasswordOtp" component={ResetPasswordOtp} />
+
+        <Stack.Screen name="ResetPassword" component={ResetPassword} />
 
         <Stack.Screen
-          name="register"
-          component={Register}
+          name="LocationSetupScreen"
+          component={LocationSetupScreen}
+          options={{ headerShown: false }}
         />
 
-        <Stack.Screen
-          name="otpVerification"
-          component={OtpVerification}
-        />
-
-        <Stack.Screen
-          name="Login"
-          component={Login}
-        />
-
-        <Stack.Screen
-          name="ForgotPassword"
-          component={ForgotPassword}
-        />
-
-        <Stack.Screen
-          name="ResetPasswordOtp"
-          component={ResetPasswordOtp}
-        />
-
-        <Stack.Screen
-          name="ResetPassword"
-          component={ResetPassword}
-        />
-
-        <Stack.Screen
-          name="MainDrawer"
-          component={DrawerNavigator}
-        />
+        <Stack.Screen name="MainDrawer" component={DrawerNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
   );

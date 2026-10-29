@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 import {
   Alert,
@@ -12,12 +12,12 @@ import {
   TextInput,
   useWindowDimensions,
   View,
-} from "react-native";
+} from 'react-native';
 
-import { SafeAreaView } from "react-native-safe-area-context";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { loginUser } from "../../api/authApi";
+import { loginUser } from '../../api/authApi';
 
 const Login = ({ navigation }) => {
   const { width, height } = useWindowDimensions();
@@ -26,8 +26,8 @@ const Login = ({ navigation }) => {
   // STATE
   // =====================================================
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -43,34 +43,25 @@ const Login = ({ navigation }) => {
 
     // Email validation
     if (!trimmedEmail) {
-      Alert.alert(
-        "Required",
-        "Please enter your email address."
-      );
+      Alert.alert('Required', 'Please enter your email address.');
       return;
     }
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
-      Alert.alert(
-        "Invalid Email",
-        "Please enter a valid email address."
-      );
+      Alert.alert('Invalid Email', 'Please enter a valid email address.');
       return;
     }
 
     // Password validation
     if (!password) {
-      Alert.alert(
-        "Required",
-        "Please enter your password."
-      );
+      Alert.alert('Required', 'Please enter your password.');
       return;
     }
 
     try {
       setLoading(true);
 
-      console.log("LOGIN DATA:", {
+      console.log('LOGIN DATA:', {
         email: trimmedEmail,
         password,
       });
@@ -80,26 +71,23 @@ const Login = ({ navigation }) => {
         password,
       });
 
-      console.log("LOGIN SUCCESS:", data);
+      console.log('LOGIN SUCCESS:', data);
 
       navigation.reset({
         index: 0,
-        routes: [{ name: "MainDrawer" }],
-        });
-
+        routes: [{ name: 'LocationSetupScreen' }],
+      });
     } catch (error) {
-      console.log("LOGIN ERROR:", error);
+      console.log('LOGIN ERROR:', error);
 
       Alert.alert(
-        "Login Failed",
-        error?.message ||
-          "Unable to login. Please try again."
+        'Login Failed',
+        error?.message || 'Unable to login. Please try again.',
       );
     } finally {
       setLoading(false);
     }
   };
-
 
   // =====================================================
   // UI
@@ -109,11 +97,7 @@ const Login = ({ navigation }) => {
     <SafeAreaView style={styles.safeArea}>
       <KeyboardAvoidingView
         style={styles.keyboardView}
-        behavior={
-          Platform.OS === "ios"
-            ? "padding"
-            : undefined
-        }
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <ScrollView
           contentContainerStyle={[
@@ -137,14 +121,12 @@ const Login = ({ navigation }) => {
             ]}
           >
             <Image
-              source={require("../../assets/logo.png")}
+              source={require('../../assets/logo.png')}
               style={[
                 styles.logo,
                 {
                   width: Math.min(width * 0.42, 155),
-                  height:
-                    Math.min(width * 0.42, 155) *
-                    0.62,
+                  height: Math.min(width * 0.42, 155) * 0.62,
                 },
               ]}
               resizeMode="contain"
@@ -153,13 +135,9 @@ const Login = ({ navigation }) => {
 
           {/* ================= TITLE ================= */}
 
-          <Text style={styles.title}>
-            Welcome back!
-          </Text>
+          <Text style={styles.title}>Welcome back!</Text>
 
-          <Text style={styles.subtitle}>
-            Log in to continue
-          </Text>
+          <Text style={styles.subtitle}>Log in to continue</Text>
 
           {/* ================= FORM ================= */}
 
@@ -221,16 +199,10 @@ const Login = ({ navigation }) => {
 
               <Pressable
                 style={styles.eyeButton}
-                onPress={() =>
-                  setShowPassword(!showPassword)
-                }
+                onPress={() => setShowPassword(!showPassword)}
               >
                 <Ionicons
-                  name={
-                    showPassword
-                      ? "eye-outline"
-                      : "eye-off-outline"
-                  }
+                  name={showPassword ? 'eye-outline' : 'eye-off-outline'}
                   size={22}
                   color="#555"
                 />
@@ -241,13 +213,9 @@ const Login = ({ navigation }) => {
 
             <Pressable
               style={styles.forgotButton}
-              onPress={() =>
-                navigation.navigate("ForgotPassword")
-              }
+              onPress={() => navigation.navigate('ForgotPassword')}
             >
-              <Text style={styles.forgotText}>
-                Forgot Password?
-              </Text>
+              <Text style={styles.forgotText}>Forgot Password?</Text>
             </Pressable>
 
             {/* ================= LOGIN BUTTON ================= */}
@@ -262,9 +230,7 @@ const Login = ({ navigation }) => {
               disabled={loading}
             >
               <Text style={styles.loginButtonText}>
-                {loading
-                  ? "Logging in..."
-                  : "Log in"}
+                {loading ? 'Logging in...' : 'Log in'}
               </Text>
             </Pressable>
           </View>
@@ -274,9 +240,7 @@ const Login = ({ navigation }) => {
           <View style={styles.dividerContainer}>
             <View style={styles.divider} />
 
-            <Text style={styles.dividerText}>
-              or continue with
-            </Text>
+            <Text style={styles.dividerText}>or continue with</Text>
 
             <View style={styles.divider} />
           </View>
@@ -287,60 +251,38 @@ const Login = ({ navigation }) => {
             {/* GOOGLE */}
 
             <Pressable
-              style={[
-                styles.socialItem,
-                loading && styles.socialDisabled,
-              ]}
+              style={[styles.socialItem, loading && styles.socialDisabled]}
             >
               <View style={styles.socialCircle}>
-                <Text style={styles.googleIcon}>
-                  G
-                </Text>
+                <Text style={styles.googleIcon}>G</Text>
               </View>
 
-              <Text style={styles.socialText}>
-                Google
-              </Text>
+              <Text style={styles.socialText}>Google</Text>
             </Pressable>
 
             {/* APPLE */}
 
             <Pressable
-              style={[
-                styles.socialItem,
-                loading && styles.socialDisabled,
-              ]}
+              style={[styles.socialItem, loading && styles.socialDisabled]}
             >
               <View style={styles.socialCircle}>
-                <Ionicons
-                  name="logo-apple"
-                  size={30}
-                  color="#111"
-                />
+                <Ionicons name="logo-apple" size={30} color="#111" />
               </View>
 
-              <Text style={styles.socialText}>
-                Apple
-              </Text>
+              <Text style={styles.socialText}>Apple</Text>
             </Pressable>
           </View>
 
           {/* ================= REGISTER ================= */}
 
           <View style={styles.registerContainer}>
-            <Text style={styles.registerQuestion}>
-              Don't have an account?
-            </Text>
+            <Text style={styles.registerQuestion}>Don't have an account?</Text>
 
             <Pressable
-              onPress={() =>
-                navigation.navigate("register")
-              }
+              onPress={() => navigation.navigate('register')}
               hitSlop={10}
             >
-              <Text style={styles.registerText}>
-                Sign up
-              </Text>
+              <Text style={styles.registerText}>Sign up</Text>
             </Pressable>
           </View>
         </ScrollView>
@@ -356,7 +298,7 @@ const Login = ({ navigation }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: '#FFFFFF',
   },
 
   keyboardView: {
@@ -365,19 +307,19 @@ const styles = StyleSheet.create({
 
   scrollContent: {
     flexGrow: 1,
-    alignItems: "center",
+    alignItems: 'center',
     paddingBottom: 25,
   },
 
   // ================= LOGO =================
 
   logoContainer: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   logo: {
-    alignSelf: "center",
+    alignSelf: 'center',
   },
 
   // ================= TITLE =================
@@ -385,35 +327,35 @@ const styles = StyleSheet.create({
   title: {
     marginTop: 8,
     fontSize: 24,
-    fontWeight: "700",
-    color: "#111111",
-    textAlign: "center",
+    fontWeight: '700',
+    color: '#111111',
+    textAlign: 'center',
   },
 
   subtitle: {
     marginTop: 2,
     fontSize: 16,
-    fontWeight: "600",
-    color: "#444444",
-    textAlign: "center",
+    fontWeight: '600',
+    color: '#444444',
+    textAlign: 'center',
   },
 
   // ================= FORM =================
 
   formContainer: {
-    width: "100%",
+    width: '100%',
     maxWidth: 430,
   },
 
   inputContainer: {
-    width: "100%",
+    width: '100%',
     minHeight: 49,
     borderWidth: 2,
-    borderColor: "#AFAFAF",
+    borderColor: '#AFAFAF',
     borderRadius: 11,
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#FFFFFF",
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
     marginBottom: 16,
     paddingHorizontal: 13,
   },
@@ -427,40 +369,40 @@ const styles = StyleSheet.create({
     flex: 1,
     minHeight: 48,
     fontSize: 15,
-    color: "#222222",
+    color: '#222222',
     paddingVertical: 0,
   },
 
   eyeButton: {
     width: 35,
     height: 45,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   // ================= FORGOT PASSWORD =================
 
   forgotButton: {
-    alignSelf: "flex-end",
+    alignSelf: 'flex-end',
     marginTop: -5,
     marginBottom: 20,
   },
 
   forgotText: {
     fontSize: 13,
-    fontWeight: "600",
-    color: "#DC3026",
+    fontWeight: '600',
+    color: '#DC3026',
   },
 
   // ================= LOGIN BUTTON =================
 
   loginButton: {
-    width: "100%",
+    width: '100%',
     height: 50,
     borderRadius: 8,
-    backgroundColor: "#DC3026",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#DC3026',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   buttonPressed: {
@@ -472,18 +414,18 @@ const styles = StyleSheet.create({
   },
 
   loginButtonText: {
-    color: "#FFFFFF",
+    color: '#FFFFFF',
     fontSize: 16,
-    fontWeight: "700",
+    fontWeight: '700',
   },
 
   // ================= DIVIDER =================
 
   dividerContainer: {
-    width: "100%",
+    width: '100%',
     maxWidth: 430,
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     marginTop: 25,
     marginBottom: 18,
   },
@@ -491,29 +433,29 @@ const styles = StyleSheet.create({
   divider: {
     flex: 1,
     height: 1,
-    backgroundColor: "#DDDDDD",
+    backgroundColor: '#DDDDDD',
   },
 
   dividerText: {
     marginHorizontal: 12,
-    color: "#999999",
+    color: '#999999',
     fontSize: 13,
-    fontWeight: "600",
+    fontWeight: '600',
   },
 
   // ================= SOCIAL =================
 
   socialContainer: {
-    width: "100%",
+    width: '100%',
     maxWidth: 180,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
   },
 
   socialItem: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     minWidth: 65,
   },
 
@@ -526,45 +468,45 @@ const styles = StyleSheet.create({
     height: 52,
     borderRadius: 26,
     borderWidth: 2,
-    borderColor: "#111111",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#FFFFFF",
+    borderColor: '#111111',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FFFFFF',
   },
 
   googleIcon: {
     fontSize: 28,
-    fontWeight: "700",
-    color: "#4285F4",
+    fontWeight: '700',
+    color: '#4285F4',
   },
 
   socialText: {
     marginTop: 5,
     fontSize: 11,
-    color: "#333333",
-    fontWeight: "500",
+    color: '#333333',
+    fontWeight: '500',
   },
 
   // ================= REGISTER =================
 
   registerContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 30,
   },
 
   registerQuestion: {
     fontSize: 13,
-    color: "#999999",
-    fontWeight: "600",
+    color: '#999999',
+    fontWeight: '600',
   },
 
   registerText: {
     marginLeft: 7,
     fontSize: 13,
-    color: "#DC3026",
-    fontWeight: "700",
+    color: '#DC3026',
+    fontWeight: '700',
   },
 });
 
